@@ -1,0 +1,22 @@
+name: Verify Platform
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+      - name: Check Terraform formatting
+        run: terraform fmt -check -recursive stacks
+      - name: Validate local cluster Terraform
+        run: terraform -chdir=stacks/local-kind/cluster init -backend=false && terraform -chdir=stacks/local-kind/cluster validate
+      - name: Validate local platform Terraform
+        run: terraform -chdir=stacks/local-kind/platform init -backend=false && terraform -chdir=stacks/local-kind/platform validate
