@@ -1,4 +1,10 @@
 configs:
+  cm:
+    resource.customizations.health.networking.k8s.io_Ingress: |
+      hs = {}
+      hs.status = "Healthy"
+      hs.message = "Cilium NodePort ingress does not publish a LoadBalancer address."
+      return hs
   params:
     server.insecure: true
 server:
