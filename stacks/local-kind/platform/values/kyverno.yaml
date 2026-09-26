@@ -27,3 +27,7 @@ reportsController:
       memory: 64Mi
     limits:
       memory: 128Mi
+webhooksCleanup:
+  image:
+    repository: bitnamilegacy/kubectl
+    tag: 1.30.2
